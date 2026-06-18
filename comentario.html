@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calificación de nuestra página</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f0f4f8;
+      color: #1d3557;
+    }
+
+    .container {
+      border: 2px solid #1d3557;
+      padding: 25px;
+      background-color: white;
+      width: 420px;
+      display: grid;
+      place-items: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #1d3557;
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 8px 0 15px;
+    }
+
+    .radio-group input {
+      margin-right: 5px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-top: 10px;
+      font-family: Arial, sans-serif;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #1d3557;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+
+    button:hover {
+      background-color: #0b2545;
+    }
+
+    .results {
+      margin-top: 25px;
+      padding: 15px;
+      background: #f1f1f1;
+      border-radius: 8px;
+      width: 100%;
+      color: #000;
+    }
+
+    .volver-btn {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+      background-color: #1d3557;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .volver-btn:hover {
+      background-color: #0b2545;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Calificación de nuestra página</h2>
+
+    <form id="ratingForm">
+      <label>¿Cómo calificarías el uso de nuestra página?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="facilidad" value="Excelente"> Excelente</label>
+        <label><input type="radio" name="facilidad" value="Buena"> Buena</label>
+        <label><input type="radio" name="facilidad" value="Regular"> Regular</label>
+        <label><input type="radio" name="facilidad" value="Mala"> Mala</label>
+      </div>
+
+      <label>¿Cómo te pareció el estilo de nuestro sitio web?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="contenido" value="Excelente"> Excelente</label>
+        <label><input type="radio" name="contenido" value="Bueno"> Bueno</label>
+        <label><input type="radio" name="contenido" value="Regular"> Regular</label>
+        <label><input type="radio" name="contenido" value="Mala"> Mala</label>
+      </div>
+
+      <label>¿Recomendarías este sitio a otras personas?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="recomendar" value="Sí"> Sí</label>
+        <label><input type="radio" name="recomendar" value="No"> No</label>
+      </div>
+
+      <label>Comentarios adicionales:</label>
+      <textarea name="comentarios" placeholder="Escribe aquí tu comentario..."></textarea>
+
+      <button type="button" onclick="mostrarResultados()">Enviar</button>
+    </form>
+
+    <div class="results" id="resultados" style="display: none;">
+      <h3>Resultados:</h3>
+      <p><strong>Facilidad de uso:</strong> <span id="facilidadResult"></span></p>
+      <p><strong>Contenido útil y claro:</strong> <span id="contenidoResult"></span></p>
+      <p><strong>Recomendación:</strong> <span id="recomendarResult"></span></p>
+      <p><strong>Comentarios:</strong> <span id="comentariosResult"></span></p>
+    </div>
+
+    <a href="tienda.php" class="volver-btn">← Regresar</a>
+  </div>
+
+  <script>
+    function mostrarResultados() {
+      const facilidad = document.querySelector('input[name="facilidad"]:checked');
+      const contenido = document.querySelector('input[name="contenido"]:checked');
+      const recomendar = document.querySelector('input[name="recomendar"]:checked');
+      const comentarios = document.querySelector('textarea[name="comentarios"]').value;
+
+      if (facilidad && contenido && recomendar) {
+        document.getElementById("facilidadResult").textContent = facilidad.value;
+        document.getElementById("contenidoResult").textContent = contenido.value;
+        document.getElementById("recomendarResult").textContent = recomendar.value;
+        document.getElementById("comentariosResult").textContent = comentarios ? comentarios : "Sin comentarios";
+        document.getElementById("resultados").style.display = "block";
+      } else {
+        alert("Por favor, responde todas las preguntas.");
+      }
+    }
+  </script>
+</body>
+</html>

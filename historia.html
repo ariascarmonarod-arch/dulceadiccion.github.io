@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sobre Nosotros - Galletas Jisooo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #fdf6ec, #fdf6ec); /* beige claro */
+      color: #001f3f; /* azul marino para texto */
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .main {
+      max-width: 1000px;
+      margin: auto;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      padding: 40px;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(30px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    h1, h2 {
+      color: #001f3f; /* azul marino */
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      text-align: center;
+    }
+
+    h2 {
+      margin-top: 40px;
+    }
+
+    p {
+      font-size: 1.1em;
+      margin-bottom: 20px;
+    }
+
+    ul {
+      padding-left: 20px;
+      list-style-type: square;
+    }
+
+    .columns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .column {
+      flex: 1 1 300px;
+      background-color: #fefaf5; /* tono beige claro */
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      transition: transform 0.3s;
+    }
+
+    .column:hover {
+      transform: translateY(-5px);
+    }
+
+    .column h3 {
+      color: #001f3f;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    th {
+      background-color: #001f3f;
+      color: white;
+    }
+
+    .button-section {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .button-section button {
+      background-color: #001f3f;
+      color: white;
+      padding: 12px 24px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .button-section button:hover {
+      background-color: #003366;
+    }
+  </style>
+</head>
+<body>
+  <div class="main">
+    <h1>Nuestra Historia</h1>
+    <p>Somos <strong>Galletas Jisooo &lt;3</strong>, una pequeña tienda fundada en 2023 por un grupo de estudiantes con grandes sueños y amor por los gatitos y la repostería. Gracias al apoyo de nuestra comunidad, transformamos un proyecto escolar en un emprendimiento real que no solo endulza vidas, ¡también las salva!</p>
+
+    <h2>Objetivos</h2>
+    <ul>
+      <li>Brindar productos dulces y artesanales de alta calidad.</li>
+      <li>Donar parte de nuestras ganancias a refugios de animales.</li>
+      <li>Fomentar el espíritu emprendedor juvenil.</li>
+      <li>Crear una comunidad solidaria y feliz.</li>
+    </ul>
+
+    <div class="columns">
+      <div class="column">
+        <h3>Tipos de Galletas</h3>
+        <ul>
+          <li>Chispas de Chocolate</li>
+          <li>Avena con Miel</li>
+          <li>Galletas de Canela</li>
+          <li>Rellenas de Nuez</li>
+          <li>Espirales</li>
+          <li>Galletas con corazón al centro</li>
+          <li>Galleta de Zanahoria</li>
+          <li>Tartaletas rellenas</li>
+        </ul>
+      </div>
+
+      <div class="column">
+        <h3>Tabla de Precios por Caja</h3>
+        <table>
+          <tr><th>Producto</th><th>Precio</th></tr>
+          <tr><td>Chispas de Chocolate</td><td>$15</td></tr>
+          <tr><td>Avena con Miel</td><td>$13</td></tr>
+          <tr><td>Canela</td><td>$10</td></tr>
+          <tr><td>Rellenas de Nuez</td><td>$18</td></tr>
+          <tr><td>Espirales</td><td>$20</td></tr>
+          <tr><td>Corazón al centro</td><td>$21</td></tr>
+          <tr><td>Zanahoria</td><td>$18</td></tr>
+          <tr><td>Tartaletas</td><td>$25</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="button-section">
+      <a href="tienda.php"><button>Regresar a la Tienda</button></a>
+    </div>
+  </div>
+</body>
+</html>

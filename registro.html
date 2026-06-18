@@ -1,0 +1,200 @@
+<?php
+$conexion = new mysqli("localhost", "root", "", "tienda");
+
+if ($conexion->connect_error) {
+    die("Error de conexión: " . $conexion->connect_error);
+}
+
+$mensaje = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $id_usuario = $_POST['id_usuario'];
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido'];
+    $contraseña = $_POST['contraseña'];
+
+    // Verificar si el ID ya existe
+    $verificar = $conexion->query("SELECT * FROM usuario WHERE id_usuario='$id_usuario'");
+
+    if ($verificar->num_rows > 0) {
+
+        $mensaje = "El ID de usuario ya existe.";
+
+    } else {
+
+        $sql = "INSERT INTO usuario (id_usuario, nombre, apellido, contraseña)
+                VALUES ('$id_usuario', '$nombre', '$apellido', '$contraseña')";
+
+        if ($conexion->query($sql)) {
+            $mensaje = "Usuario registrado correctamente.";
+        } else {
+            $mensaje = "Error al registrar: " . $conexion->error;
+        }
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registro de Usuario</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#5b7cff,#7d57c2);
+}
+
+.contenedor{
+    width:500px;
+    padding:40px;
+    background:rgba(255,255,255,0.15);
+    border-radius:25px;
+    backdrop-filter:blur(10px);
+    box-shadow:0 15px 40px rgba(0,0,0,.25);
+    text-align:center;
+}
+
+h1{
+    color:white;
+    font-size:40px;
+    margin-bottom:25px;
+}
+
+input{
+    width:100%;
+    padding:15px;
+    margin:10px 0;
+    border:none;
+    border-radius:12px;
+    font-size:16px;
+    background:white;
+}
+
+input:focus{
+    outline:none;
+}
+
+button{
+    width:100%;
+    padding:18px;
+    margin-top:15px;
+    border:none;
+    border-radius:18px;
+    background:#4CAF50;
+    color:white;
+    font-size:20px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.03);
+    background:#43a047;
+}
+
+.mensaje{
+    background:#ffebee;
+    color:#c62828;
+    padding:10px;
+    border-radius:10px;
+    margin-bottom:15px;
+}
+
+.volver-login{
+    margin-top:20px;
+}
+
+.volver-login a{
+    color:#FFD700;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:16px;
+}
+
+.volver-login a:hover{
+    text-decoration:underline;
+}
+
+.icono{
+    font-size:60px;
+    margin-bottom:10px;
+}
+
+.subtitulo{
+    color:#e8e8e8;
+    margin-bottom:25px;
+    font-size:18px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="contenedor">
+
+    <h1>Registro de Usuario</h1>
+
+    <?php
+    if($mensaje != ""){
+        echo "<div class='mensaje'>$mensaje</div>";
+    }
+    ?>
+
+    <form method="POST">
+
+        <input
+            type="number"
+            name="id_usuario"
+            placeholder="ID Usuario"
+            required>
+
+        <input
+            type="text"
+            name="nombre"
+            placeholder="Nombre"
+            required>
+
+        <input
+            type="text"
+            name="apellido"
+            placeholder="Apellido"
+            required>
+
+        <input
+            type="password"
+            name="contraseña"
+            placeholder="Contraseña"
+            required>
+
+        <button type="submit">
+            Registrar Usuario
+        </button>
+
+    </form>
+
+    <div class="volver-login">
+        <a href="login_cliente.php">
+            ← Volver al inicio de sesión
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>

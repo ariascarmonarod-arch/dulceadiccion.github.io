@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Recetario de Galletas</title>
+ 
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f8ff;
+      color: #333;
+    }
+   header {
+  background: #001f3f;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    .container {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.02);
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 1rem;
+    }
+    .card h2 {
+      margin-top: 0;
+      color: #0077cc;
+      font-size: 1.2rem;
+    }
+    .card p {
+      font-size: 0.9rem;
+    }
+    .back-btn {
+      display: block;
+      width: fit-content;
+      margin: 2rem auto;
+      padding: 0.8rem 1.5rem;
+      background: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      text-decoration: none;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: background 0.3s;
+    }
+    .back-btn:hover {
+      background: #005fa3;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Recetario de Galletas</h1>
+  <p>Disfruta nuestras recetas clásicas y deliciosas</p>
+</header>
+
+<div class="container">
+  
+  <div class="card">
+    <img src="chocolate.jpg" alt="Chispas de Chocolate">
+    <div class="card-body">
+      <h2>Chispas de Chocolate</h2>
+      <p><strong>Ingredientes:</strong> Harina, mantequilla, azúcar, huevo, chispas de chocolate.</p>
+      <p><strong>Preparación:</strong> Mezcla todos los ingredientes, forma bolitas y hornea a 180 °C por 12-15 minutos.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="almendra.jpg" alt="Avena con Miel">
+    <div class="card-body">
+      <h2>Avena con Miel</h2>
+      <p><strong>Ingredientes:</strong> Avena, miel, huevo, mantequilla, canela.</p>
+      <p><strong>Preparación:</strong> Mezcla y forma las galletas, hornea a 180 °C por 10-12 minutos.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="canela.jpg" alt="Canela">
+    <div class="card-body">
+      <h2>Canela</h2>
+      <p><strong>Ingredientes:</strong> Harina, mantequilla, azúcar, canela molida.</p>
+      <p><strong>Preparación:</strong> Mezcla, corta con moldes y hornea por 12 minutos a 175 °C.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="nuez.jpg" alt="Rellenas de Nuez">
+    <div class="card-body">
+      <h2>Rellenas de Nuez</h2>
+      <p><strong>Ingredientes:</strong> Harina, mantequilla, azúcar, nuez molida, dulce de leche.</p>
+      <p><strong>Preparación:</strong> Haz la base, rellena con dulce de leche y hornea a 180 °C por 15 min.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="espirales.jpg" alt="Espirales">
+    <div class="card-body">
+      <h2>Espirales</h2>
+      <p><strong>Ingredientes:</strong> Harina, mantequilla, cacao, azúcar, vainilla.</p>
+      <p><strong>Preparación:</strong> Divide en dos masas, una con cacao. Enrolla en espiral y hornea.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="corazon.jpg" alt="Corazón al centro">
+    <div class="card-body">
+      <h2>Corazón al centro</h2>
+      <p><strong>Ingredientes:</strong> Harina, azúcar, mantequilla, mermelada de fresa.</p>
+      <p><strong>Preparación:</strong> Corta dos capas, una con centro vacío. Une con mermelada y hornea.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="zana.jpg" alt="Zanahoria">
+    <div class="card-body">
+      <h2>Zanahoria</h2>
+      <p><strong>Ingredientes:</strong> Zanahoria rallada, harina, azúcar, nuez, huevo, canela.</p>
+      <p><strong>Preparación:</strong> Mezcla, forma bolitas y hornea por 15 min a 180 °C.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="tarta.jpg" alt="Tartaletas">
+    <div class="card-body">
+      <h2>Tartaletas</h2>
+      <p><strong>Ingredientes:</strong> Harina, mantequilla, yema de huevo, crema pastelera, frutas.</p>
+      <p><strong>Preparación:</strong> Hornea la base, rellena con crema y decora con fruta.</p>
+    </div>
+  </div>
+</div>
+
+<a href="tienda.php" class="back-btn">← Volver a la tienda</a>
+
+</body>
+</html>

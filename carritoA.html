@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<?php
+$conexion = new mysqli("localhost", "root", "", "tienda");
+
+if ($conexion->connect_error) {
+    die("Error de conexión: " . $conexion->connect_error);
+}
+
+$mensaje = "";
+$editar = false;
+
+$producto = [
+    'id_producto' => '',
+    'nombre' => '',
+    'cantidad' => '',
+    'precio' => ''
+];
+
+/* INSERTAR */
+if(isset($_POST['agregar'])){
+
+    $id_producto = $_POST['id_producto'];
+    $nombre = $_POST['nombre'];
+    $cantidad = $_POST['cantidad'];
+    $precio = $_POST['precio'];
+
+    $imagen = "";
+
+    if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0){
+
+        $imagen = "imagenes/" . basename($_FILES['imagen']['name']);
+
+        move_uploaded_file(
+            $_FILES['imagen']['tmp_name'],
+            $imagen
+        );
+    }
+
+    $sql = "INSERT INTO product
+            (id_producto,nombre,cantidad,precio,imagen)
+            VALUES
+            ('$id_producto','$nombre','$cantidad','$precio','$imagen')";
+
+    if($conexion->query($sql)){
+        $mensaje = "Producto agregado correctamente";
+    }else{
+        $mensaje = "Error: " . $conexion->error;
+    }
+}
+
+/* ELIMINAR */
+if(isset($_GET['eliminar'])){
+
+    $id = $_GET['eliminar'];
+
+    if($conexion->query("DELETE FROM product WHERE id_producto='$id'")){
+        header("Location: carritoA.php");
+        exit();
+    }else{
+        $mensaje = "Error al eliminar: " . $conexion->error;
+    }
+}
+
+/* CARGAR DATOS PARA EDITAR */
+if(isset($_GET['editar'])){
+
+    $id = $_GET['editar'];
+
+    $resultadoEditar = $conexion->query(
+        "SELECT * FROM product WHERE id_producto='$id'"
+    );
+
+    if($resultadoEditar && $resultadoEditar->num_rows > 0){
+        $producto = $resultadoEditar->fetch_assoc();
+        $editar = true;
+    }else{
+        $mensaje = "Producto no encontrado.";
+    }
+}
+
+if(isset($_POST['actualizar'])){
+
+    $id_producto = $_POST['id_producto'];
+    $nombre = $_POST['nombre'];
+    $cantidad = $_POST['cantidad'];
+    $precio = $_POST['precio'];
+
+    $sqlImagen = "";
+
+    if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0){
+
+        $imagen = "imagenes/" . basename($_FILES['imagen']['name']);
+
+        move_uploaded_file(
+            $_FILES['imagen']['tmp_name'],
+            $imagen
+        );
+
+        $sqlImagen = ", imagen='$imagen'";
+    }
+
+    $sql = "UPDATE product
+            SET nombre='$nombre',
+                cantidad='$cantidad',
+                precio='$precio'
+                $sqlImagen
+            WHERE id_producto='$id_producto'";
+
+    if($conexion->query($sql)){
+        header("Location: carritoA.php");
+        exit();
+    }else{
+        $mensaje = "Error al actualizar: " . $conexion->error;
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Administración de Productos</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#5b7cff,#7d57c2);
+    min-height:100vh;
+    padding:30px;
+}
+
+.contenedor{
+    max-width:1200px;
+    margin:auto;
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(10px);
+    padding:30px;
+    border-radius:20px;
+}
+
+h1{
+    color:white;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.mensaje{
+    background:white;
+    color:green;
+    padding:10px;
+    border-radius:10px;
+    margin-bottom:15px;
+}
+
+form{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-bottom:20px;
+}
+
+input{
+    padding:12px;
+    border:none;
+    border-radius:10px;
+}
+
+button{
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#4CAF50;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#43a047;
+}
+
+
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+th{
+    background:#4CAF50;
+    color:white;
+    padding:15px;
+}
+
+td{
+    padding:12px;
+    text-align:center;
+}
+
+tr:nth-child(even){
+    background:#f4f4f4;
+}
+
+.editar{
+    background:#2196F3;
+    color:white;
+    padding:8px 12px;
+    text-decoration:none;
+    border-radius:5px;
+}
+
+.eliminar{
+    background:#f44336;
+    color:white;
+    padding:8px 12px;
+    text-decoration:none;
+    border-radius:5px;
+}
+.volver{
+    display:inline-block;
+    margin-bottom:20px;
+    padding:12px 20px;
+    background:#ff9800;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.volver:hover{
+    background:#f57c00;
+}
+
+</style>
+</head>
+<body>
+
+<div class="contenedor">
+
+<h1>📦 Administración de Productos</h1>
+<a href="principal.html" class="volver">
+    ⬅ Regresar a la Página Principal
+</a>
+
+<?php
+if($mensaje!=""){
+    echo "<div class='mensaje'>$mensaje</div>";
+}
+?>
+
+
+
+<form method="POST" enctype="multipart/form-data">
+
+<?php if($editar){ ?>
+
+<input type="number"
+       name="id_producto"
+       value="<?php echo $producto['id_producto']; ?>"
+       readonly>
+
+<input type="text"
+       name="nombre"
+       value="<?php echo $producto['nombre']; ?>"
+       required>
+
+<input type="number"
+       name="cantidad"
+       value="<?php echo $producto['cantidad']; ?>"
+       required>
+
+<input type="number"
+       step="0.01"
+       name="precio"
+       value="<?php echo $producto['precio']; ?>"
+       required>
+<input type="file"
+       name="imagen"
+       accept="image/*"
+       required>
+
+
+<button type="submit" name="actualizar">
+    Actualizar
+</button>
+
+<?php } else { ?>
+
+<input type="number"
+       name="id_producto"
+       placeholder="ID Producto"
+       required>
+
+<input type="text"
+       name="nombre"
+       placeholder="Nombre"
+       required>
+
+<input type="number"
+       name="cantidad"
+       placeholder="Cantidad"
+       required>
+
+<input type="number"
+       step="0.01"
+       name="precio"
+       placeholder="Precio"
+       required>
+
+<button type="submit" name="agregar">
+    Agregar
+</button>
+
+<?php } ?>
+
+</form>
+
+<table>
+
+<tr>
+    <th>ID</th>
+    <th>Nombre</th>
+    <th>Cantidad</th>
+    <th>Precio</th>
+    <th>Acciones</th>
+</tr>
+
+<?php
+
+$resultado = $conexion->query("SELECT * FROM product");
+
+while($fila = $resultado->fetch_assoc()){
+
+echo "
+<tr>
+<td>{$fila['id_producto']}</td>
+<td>{$fila['nombre']}</td>
+<td>{$fila['cantidad']}</td>
+<td>$ {$fila['precio']}</td>
+
+<td>
+
+<a class='editar'
+href='?editar={$fila['id_producto']}'>
+Editar
+</a>
+
+<a class='eliminar'
+href='?eliminar={$fila['id_producto']}'
+onclick=\"return confirm('¿Eliminar producto?')\">
+Eliminar
+</a>
+
+</td>
+</tr>
+";
+}
+?>
+
+</table>
+
+</div>
+
+</body>
+</html>
