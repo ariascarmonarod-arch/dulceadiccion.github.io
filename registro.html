@@ -1,40 +1,3 @@
-<?php
-$conexion = new mysqli("localhost", "root", "", "tienda");
-
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
-}
-
-$mensaje = "";
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    $id_usuario = $_POST['id_usuario'];
-    $nombre = $_POST['nombre'];
-    $apellido = $_POST['apellido'];
-    $contraseña = $_POST['contraseña'];
-
-    // Verificar si el ID ya existe
-    $verificar = $conexion->query("SELECT * FROM usuario WHERE id_usuario='$id_usuario'");
-
-    if ($verificar->num_rows > 0) {
-
-        $mensaje = "El ID de usuario ya existe.";
-
-    } else {
-
-        $sql = "INSERT INTO usuario (id_usuario, nombre, apellido, contraseña)
-                VALUES ('$id_usuario', '$nombre', '$apellido', '$contraseña')";
-
-        if ($conexion->query($sql)) {
-            $mensaje = "Usuario registrado correctamente.";
-        } else {
-            $mensaje = "Error al registrar: " . $conexion->error;
-        }
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -109,8 +72,9 @@ button:hover{
 }
 
 .mensaje{
-    background:#ffebee;
-    color:#c62828;
+    display:none;
+    background:#e8f5e9;
+    color:#2e7d32;
     padding:10px;
     border-radius:10px;
     margin-bottom:15px;
@@ -131,17 +95,6 @@ button:hover{
     text-decoration:underline;
 }
 
-.icono{
-    font-size:60px;
-    margin-bottom:10px;
-}
-
-.subtitulo{
-    color:#e8e8e8;
-    margin-bottom:25px;
-    font-size:18px;
-}
-
 </style>
 </head>
 <body>
@@ -150,35 +103,33 @@ button:hover{
 
     <h1>Registro de Usuario</h1>
 
-    <?php
-    if($mensaje != ""){
-        echo "<div class='mensaje'>$mensaje</div>";
-    }
-    ?>
+    <div class="mensaje" id="mensaje">
+        Usuario registrado correctamente.
+    </div>
 
-    <form method="POST">
+    <form id="registroForm">
 
         <input
             type="number"
-            name="id_usuario"
+            id="id_usuario"
             placeholder="ID Usuario"
             required>
 
         <input
             type="text"
-            name="nombre"
+            id="nombre"
             placeholder="Nombre"
             required>
 
         <input
             type="text"
-            name="apellido"
+            id="apellido"
             placeholder="Apellido"
             required>
 
         <input
             type="password"
-            name="contraseña"
+            id="contrasena"
             placeholder="Contraseña"
             required>
 
@@ -189,12 +140,28 @@ button:hover{
     </form>
 
     <div class="volver-login">
-        <a href="login_cliente.php">
+        <a href="login_cliente.html">
             ← Volver al inicio de sesión
         </a>
     </div>
 
 </div>
+
+<script>
+
+document.getElementById("registroForm").addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+    document.getElementById("mensaje").style.display = "block";
+
+    setTimeout(function(){
+        window.location.href = "login_cliente.html";
+    }, 2000);
+
+});
+
+</script>
 
 </body>
 </html>
